@@ -20,6 +20,15 @@ export const putDb = async (content) => {
   await tx.done;
 };
 
+export const getDb = async () => {
+  const db = await initdb();
+  const tx = db.transaction('jate', 'readonly');
+  const store = tx.objectStore('jate');
+  const allContent = await store.getAll();
+  await tx.done;
+  return allContent.map(item => item.content);
+};
+
 
 // TODO: Add logic to a method that accepts some content and adds it to the database
 export const putDb = async (content) => console.error('putDb not implemented');
